@@ -140,7 +140,62 @@
         },
         "autoformation": {
           "title": "Autoformation",
-          "content": []
+          "content": [
+            {
+              "domaine": "Data Analyst",
+              "description": "Maitrizer les compétences essentielles pour analyser et interpréter des données afin de soutenir la prise de décision en entreprise.",
+              "roadmapImage": "/roadmaps/data-analyst.jpg",
+              "downloadLink": "/roadmaps/data-analyst.pdf",
+              "niveau": "Débutant à Avancé",
+              "duree": "6-12 mois",
+              "technologies": ["Excel", "SQL", "Python", "Tableau", "Power BI"]
+            },
+            {
+              "domaine": "Software Architect",
+              "description": "Maîtriser les compétences clés pour concevoir, structurer et optimiser des architectures logicielles robustes afin de garantir la performance, la sécurité et l’évolutivité des systèmes informatiques.",
+              "roadmapImage": "/roadmaps/Software-Architect.jpg",
+              "downloadLink": "/roadmaps/Software-Architect.pdf",
+              "niveau": "Débutant à Avancé",
+              "duree": "6-12 mois",
+              "technologies": ["UML", "SysML", "AWS", "Azure", "GCP", "Docker", "Kubernetes", "TOGAF"]
+            },
+            {
+              "domaine": "Data Engineer",
+              "description": "Maîtriser les compétences essentielles pour concevoir, gérer et optimiser des pipelines de données fiables afin de garantir la qualité, la disponibilité et l’efficacité des informations utilisées par l’entreprise.",
+              "roadmapImage": "/roadmaps/Data-Engineer.jpg",
+              "downloadLink": "/roadmaps/Data-Engineer.pdf",
+              "niveau": "Débutant à Avancé",
+              "duree": "6-12 mois",
+              "technologies": ["SQL", "NoSQL", "Hadoop", "Spark", "Airflow", "Talend", "Python", "Scala", "BigQuery", "Redshift"]
+            },
+            {
+              "domaine": "Full Stack Developer",
+              "description": "Maîtriser les compétences clés pour développer et intégrer des applications complètes, du front-end au back-end, afin d’assurer une expérience utilisateur fluide et des systèmes performants.",
+              "roadmapImage": "/roadmaps/Full-Stack-Developer.jpg",
+              "downloadLink": "/roadmaps/Full-Stack-Developer.pdf",
+              "niveau": "Débutant à Avancé",
+              "duree": "6-12 mois",
+              "technologies": ["HTML", "CSS", "JavaScript", "React", "Angular", "Vue.js", "Node.js", "Django", "Spring Boot", "MySQL", "PostgreSQL", "MongoDB", "Git", "Docker"]
+            },
+            {
+              "domaine": "AI Engineer",
+              "description": "Maîtriser les compétences fondamentales pour concevoir, entraîner et déployer des modèles d’intelligence artificielle afin de transformer les données en solutions innovantes et automatisées.",
+              "roadmapImage": "/roadmaps/AI-Engineer.jpg",
+              "downloadLink": "/roadmaps/AI-Engineer.pdf",
+              "niveau": "Débutant à Avancé",
+              "duree": "6-12 mois",
+              "technologies": ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "Pandas", "NumPy", "Azure ML", "AWS SageMaker", "Google AI Platform", "spaCy", "OpenCV"]
+            },
+            {
+              "domaine": "Cyber Security Expert",
+              "description": "Maîtriser les compétences indispensables pour protéger les systèmes et les données contre les menaces numériques, en assurant la confidentialité, l’intégrité et la résilience des infrastructures informatiques.",
+              "roadmapImage": "/roadmaps/Cyber-Security-Expert.jpg",
+              "downloadLink": "/roadmaps/Cyber-Security-Expert.pdf",
+              "niveau": "Débutant à Avancé",
+              "duree": "6-12 mois",
+              "technologies": ["Wireshark", "Snort", "Splunk", "ELK Stack", "Metasploit", "Burp Suite", "Nmap", "IAM", "Zero Trust", "Firewalls", "Cryptography"]
+            }
+          ]
         }
       }
     },
@@ -157,15 +212,52 @@
               "details": ["Tech Mastery", "Hackathons", "Conférences", "Projets collaboratifs"],
               "Cellules": ["Data & AI", "Competitive Programming", "Cyber Security"],
               "instagram": "https://www.instagram.com/code.esi/",
-              "official_website": "https://club-code.esi.ma/"
+              "official_website": "https://club-code.esi.ma/",
+              "official_mail": "code@esi.ac.ma"
             },
             {
               "title": "JLM",
               "description": "JLM is a 100% Moroccan non-profit initiative with an international dimension, working towards socio-economic and sustainable development.",
-              "details": ["Building a professional network", "Promoting socio-economic and sustainable development", "Conférences","Encouraging volunteering and social engagement"],
+              "details": [
+                "Développer un réseau professionnel",
+                "Promouvoir le développement socio-économique et durable",
+                "Organiser des conférences",
+                "Encourager le bénévolat et l'engagement social"
+              ],
               "Cellules": ["Organisation", "Présentation", "media", "Sponsoring"],
-              "instagram": "https://www.instagram.com/jlm_esi?igsh=ZGQzcjh1cWdhcGN4",
+              "instagram": "https://www.instagram.com/jlm_esi",
               "official_mail": "jlm.esi@esi.ac.ma"
+            },
+            {
+              "title": "JCMP",
+              "description": "JCMP ESI est un club social à but non lucratif de l’École des Sciences de l’Information, fondé en 2014 et dédié au développement personnel et à l'épanouissement de la vie parascolaire.",
+              "details": [
+                "Développement personnel des élèves-ingénieurs",
+                "Organisation d’activités parascolaires",
+                "Renforcement de la cohésion et de la vie estudiantine",
+                "Implication dans des initiatives sociales et communautaires"
+              ],
+              "Cellules": ["Organisation", "Communication", "Événementiel", "Médias"],
+              "instagram": "https://www.instagram.com/jcmp_esi",
+              "official_mail": "jcmp.esi@esi.ac.ma"
+            },
+            {
+              "title": "ESI TV",
+              "description": "ESI TV est le club média de l’École des Sciences de l’Information (ESI) à Rabat, qui produit des contenus audiovisuels sur la vie étudiante, l’IA, la cybersécurité, et les interviews d’ingénieurs.",
+              "details": [
+                "Production de vidéos et podcasts",
+                "Couverture des événements de l’école (PFE, soutenances…)", 
+                "Interviews d’experts (professeurs, Alumni…)", 
+                "Sensibilisation à l’IA et la cybersécurité"
+              ],
+              "Cellules": [
+                "Réalisation", 
+                "Interview / Journalisme", 
+                "Technique (vidéo / audio)", 
+                "Communication / Social Media"
+              ],
+              "instagram": "https://www.instagram.com/esi__tv/",
+              "official_mail": "esitv@esi.ac.ma"
             }
           ]
         },

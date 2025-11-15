@@ -9,6 +9,7 @@ import TransportCard from '../../components/TransportCard'
 import ResourcesCard from '../../components/ResourcesCard'
 import AssociationCard from '../../components/AssociationCard'
 import EvenementCard from '../../components/EvenementCard'
+import AutoFormationCard from '../../components/AutoFormationCard'
 import Image from 'next/image'
 import logo from '../../public/images/logo.png'
 
@@ -239,7 +240,7 @@ export default function Dashboard() {
                     return <TransportCard key={index} transport={item} />
                   }
                   // Ressources Académiques
-                  else if (activeSection === 'ressources-academiques') {
+                  else if (activeSection === 'ressources-academiques' && activeSubsection === 'resources') {
                     return <ResourcesCard key={index} resource={item} />
                   }
                   // Vie Étudiante - Associations
@@ -250,6 +251,10 @@ export default function Dashboard() {
                   // Utilisez EvenementCard pour les événements
                     else if (activeSection === 'vie-etudiante' && activeSubsection === 'evenements') {
                         return <EvenementCard key={index} evenement={item} />
+                    }
+
+                    else if (activeSection === 'ressources-academiques' && activeSubsection === 'autoformation') {
+                      return <AutoFormationCard key={index} formation={item} />
                     }
 
                   // Sections par défaut (pour evenements, autoformation, etc.)

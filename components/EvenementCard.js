@@ -282,7 +282,7 @@ export default function EvenementCard({ evenement }) {
           )}
 
           {/* Bouton participer (simulé) */}
-          <button
+          {/* <button
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -308,7 +308,7 @@ export default function EvenementCard({ evenement }) {
           >
             <span>✅</span>
             Participer
-          </button>
+          </button> */}
         </div>
 
         {/* Statut de l'événement */}

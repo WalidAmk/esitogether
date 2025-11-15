@@ -41,7 +41,7 @@ export default function Home() {
                   textDecoration: 'none'
                 }}
               >
-                S inscrire
+                S'inscrire
               </Link>
             </div>
           </div>

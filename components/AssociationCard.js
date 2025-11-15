@@ -283,6 +283,7 @@ export default function AssociationCard({ association }) {
         )}
 
         {/* Bouton de contact général */}
+          {association.official_mail && (
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -292,7 +293,7 @@ export default function AssociationCard({ association }) {
           padding: '10px 20px',
           borderRadius: '8px',
           fontSize: '14px',
-          fontWeight: '600',
+          fontWeight: '400',
           border: '1px solid #E2E8F0',
           cursor: 'pointer',
           transition: 'all 0.2s ease'
@@ -307,9 +308,11 @@ export default function AssociationCard({ association }) {
         }}
         >
           <span>📧</span>
-          Rejoindre
+          {association.official_mail}
         </div>
+        )}
       </div>
+      
 
       {/* Footer informatif */}
       <div style={{

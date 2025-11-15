@@ -263,7 +263,7 @@ export default function Home() {
             <div style={{ textAlign: 'center' }}>
               <p style={{ color: '#9CA3AF' }}>Plateforme étudiante ESI - Projet académique</p>
               <p style={{ color: '#6B7280', fontSize: '0.875rem', marginTop: '0.5rem' }}>
-                © 2024 ESITogether. Tous droits réservés.
+                © 2025 ESITogether. Tous droits réservés.
               </p>
             </div>
           </div>

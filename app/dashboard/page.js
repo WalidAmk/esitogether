@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { UserButton, useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import contentData from '../../data/content.json'
 import Image from 'next/image'
@@ -14,11 +15,14 @@ import AutoFormationCard from '../../components/AutoFormationCard'
 import FAQCard from '../../components/FAQCard'
 
 export default function Dashboard() {
+  const { user, isLoaded } = useUser()
   const router = useRouter()
   const [activeSection, setActiveSection] = useState('logement')
   const [activeSubsection, setActiveSubsection] = useState('residences-universitaires')
   const [isMobile, setIsMobile] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+    
 
   // Détection de la taille d'écran
   useEffect(() => {
@@ -53,6 +57,27 @@ export default function Dashboard() {
       setSidebarOpen(false)
     }
   }
+
+    if (!isLoaded) {
+      return (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          fontSize: '18px',
+          color: '#1A76B5',
+          backgroundColor: '#F8FAFC'
+        }}>
+          Chargement...
+        </div>
+      )
+    }
+
+    if (!user) {
+      router.push('/sign-in')
+      return null
+    }
 
   return (
     <div style={{
@@ -246,7 +271,9 @@ export default function Dashboard() {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '16px'
+              gap: '16px',
+              flex: 1,
+              minWidth: 0
             }}>
               {/* Bouton menu hamburger pour mobile */}
               {isMobile && (
@@ -271,48 +298,88 @@ export default function Dashboard() {
                 </button>
               )}
               
-              <div>
+              {/* Titre et sous-titre */}
+              <div style={{
+                minWidth: 0,
+                flex: 1
+              }}>
                 <h1 style={{
-                  fontSize: isMobile ? '18px' : '24px',
+                  fontSize: isMobile ? '16px' : '24px',
                   fontWeight: 'bold',
                   color: '#1A2937',
-                  margin: '0 0 4px 0'
+                  margin: '0 0 2px 0',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
                 }}>
                   {currentSubsection?.title || 'Tableau de Bord'}
                 </h1>
                 <p style={{
-                  fontSize: isMobile ? '12px' : '14px',
+                  fontSize: isMobile ? '11px' : '14px',
                   color: '#718096',
-                  margin: 0
+                  margin: 0,
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
                 }}>
                   {currentSection?.title || 'ESITogether'}
                 </p>
               </div>
             </div>
             
+            {/* Section utilisateur avec UserButton */}
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '16px'
+              gap: isMobile ? '8px' : '16px',
+              flexShrink: 0,
+              marginLeft: isMobile ? '8px' : '0'
             }}>
+              {/* Message de bienvenue - caché sur mobile très petit */}
               <span style={{
                 color: '#4A5568',
                 fontSize: isMobile ? '12px' : '14px',
                 fontWeight: '500',
-                display: isMobile ? 'none' : 'block'
+                display: isMobile ? 'none' : 'block',
+                whiteSpace: 'nowrap'
               }}>
-                Bonjour, Utilisateur
+                Bonjour, {user.firstName || user.username}
               </span>
-              
-              {/* Indicateur mobile */}
+
+              {/* Version courte pour mobile */}
               {isMobile && (
-                <div style={{
-                  width: '8px',
-                  height: '8px',
-                  backgroundColor: '#82D5F5',
-                  borderRadius: '50%'
-                }} />
+                <span style={{
+                  color: '#4A5568',
+                  fontSize: '12px',
+                  fontWeight: '500',
+                  display: 'block',
+                  whiteSpace: 'nowrap'
+                }}>
+                  Bonjour
+                </span>
               )}
+
+              {/* UserButton avec style personnalisé */}
+              <div style={{
+                transform: isMobile ? 'scale(0.9)' : 'scale(1)',
+                transformOrigin: 'center'
+              }}>
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      rootBox: {
+                        width: isMobile ? '32px' : '40px',
+                        height: isMobile ? '32px' : '40px'
+                      },
+                      avatarBox: {
+                        width: isMobile ? '28px' : '36px',
+                        height: isMobile ? '28px' : '36px',
+                        borderRadius: '8px'
+                      }
+                    }
+                  }}
+                />
+              </div>
             </div>
           </header>
 

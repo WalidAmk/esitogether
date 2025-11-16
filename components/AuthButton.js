@@ -1,10 +1,10 @@
 'use client'
 
-
+import { useUser } from '@clerk/nextjs'
 import Link from 'next/link'
 
 export default function AuthButton() {
-  const  isSignedIn  = true
+  const { isSignedIn } = useUser()
 
   return (
     <Link 

@@ -14,12 +14,6 @@ export default function FAQCard({ faq }) {
       overflow: 'hidden',
       transition: 'all 0.3s ease'
     }}
-    onMouseEnter={(e) => {
-      e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)'
-    }}
-    onMouseLeave={(e) => {
-      e.target.style.boxShadow = 'none'
-    }}
     >
       {/* Question */}
       <button

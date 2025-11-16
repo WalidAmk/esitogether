@@ -1,5 +1,6 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+import { Analytics } from "@vercel/analytics/next"
 
 export default async function DashboardLayout({ children }) {
 
@@ -17,6 +18,7 @@ export default async function DashboardLayout({ children }) {
       fontFamily: 'Arial, sans-serif'
     }}>
       {children}
+      <Analytics />
     </div>
   )
 }

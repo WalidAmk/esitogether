@@ -1,40 +1,69 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 export default function AssociationCard({ association }) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Détection de la taille d'écran
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <div style={{
       border: '1px solid #E2E8F0',
       borderRadius: '12px',
-      padding: '24px',
+      padding: isMobile ? '16px' : '24px',
       backgroundColor: 'white',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
       transition: 'all 0.3s ease',
-      marginBottom: '20px'
+      marginBottom: isMobile ? '16px' : '20px'
     }}
-    
+    onMouseEnter={(e) => {
+      if (!isMobile) {
+        e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.12)'
+        e.target.style.transform = 'translateY(-2px)'
+      }
+    }}
+    onMouseLeave={(e) => {
+      if (!isMobile) {
+        e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)'
+        e.target.style.transform = 'translateY(0)'
+      }
+    }}
     >
       {/* En-tête de l'association */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginBottom: '16px'
+        marginBottom: isMobile ? '12px' : '16px',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? '12px' : '0'
       }}>
         <div style={{
           display: 'flex',
           alignItems: 'flex-start',
-          gap: '16px'
+          gap: isMobile ? '12px' : '16px',
+          width: isMobile ? '100%' : 'auto'
         }}>
           {/* Logo/Icone de l'association */}
           <div style={{
-            width: '60px',
-            height: '60px',
+            width: isMobile ? '48px' : '60px',
+            height: isMobile ? '48px' : '60px',
             backgroundColor: '#1A76B5',
-            borderRadius: '12px',
+            borderRadius: isMobile ? '8px' : '12px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '24px',
+            fontSize: isMobile ? '18px' : '24px',
             fontWeight: 'bold',
             color: 'white',
             flexShrink: 0
@@ -42,21 +71,21 @@ export default function AssociationCard({ association }) {
             {association.title.charAt(0)}
           </div>
           
-          <div>
+          <div style={{ flex: 1 }}>
             <h3 style={{
-              fontSize: '22px',
+              fontSize: isMobile ? '18px' : '22px',
               fontWeight: 'bold',
               color: '#1A76B5',
-              margin: '0 0 8px 0'
+              margin: '0 0 6px 0',
+              lineHeight: '1.3'
             }}>
               {association.title}
             </h3>
             <p style={{
               color: '#4A5568',
-              fontSize: '14px',
+              fontSize: isMobile ? '13px' : '14px',
               margin: 0,
-              lineHeight: '1.5',
-              maxWidth: '500px'
+              lineHeight: '1.4'
             }}>
               {association.description}
             </p>
@@ -66,12 +95,13 @@ export default function AssociationCard({ association }) {
         {/* Badge type d'association */}
         <div style={{
           backgroundColor: '#E9F9FF',
-          padding: '6px 12px',
+          padding: isMobile ? '4px 8px' : '6px 12px',
           borderRadius: '16px',
-          fontSize: '12px',
+          fontSize: isMobile ? '10px' : '12px',
           fontWeight: '600',
           color: '#1A76B5',
-          whiteSpace: 'nowrap'
+          whiteSpace: 'nowrap',
+          alignSelf: isMobile ? 'flex-start' : 'auto'
         }}>
           Club Étudiant
         </div>
@@ -80,17 +110,17 @@ export default function AssociationCard({ association }) {
       {/* Domaines d'activité */}
       {association.details && association.details.length > 0 && (
         <div style={{ 
-          marginBottom: '20px',
-          paddingLeft: '76px'
+          marginBottom: isMobile ? '16px' : '20px',
+          paddingLeft: isMobile ? '0' : '76px'
         }}>
           <h4 style={{
-            fontSize: '16px',
+            fontSize: isMobile ? '14px' : '16px',
             fontWeight: '600',
             color: '#2D3748',
-            margin: '0 0 12px 0',
+            margin: '0 0 8px 0',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: '6px'
           }}>
             <span style={{
               width: '4px',
@@ -103,26 +133,26 @@ export default function AssociationCard({ association }) {
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '8px'
+            gap: '6px'
           }}>
             {association.details.map((domaine, index) => (
               <span
                 key={index}
                 style={{
                   backgroundColor: '#F7FAFC',
-                  padding: '6px 12px',
+                  padding: isMobile ? '4px 8px' : '6px 12px',
                   borderRadius: '16px',
-                  fontSize: '13px',
+                  fontSize: isMobile ? '11px' : '13px',
                   color: '#4A5568',
                   border: '1px solid #E2E8F0',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px'
+                  gap: '4px'
                 }}
               >
                 <span style={{
-                  width: '6px',
-                  height: '6px',
+                  width: '4px',
+                  height: '4px',
                   backgroundColor: '#82D5F5',
                   borderRadius: '50%'
                 }}></span>
@@ -136,17 +166,17 @@ export default function AssociationCard({ association }) {
       {/* Cellules/Commissions */}
       {association.Cellules && association.Cellules.length > 0 && (
         <div style={{ 
-          marginBottom: '24px',
-          paddingLeft: '76px'
+          marginBottom: isMobile ? '20px' : '24px',
+          paddingLeft: isMobile ? '0' : '76px'
         }}>
           <h4 style={{
-            fontSize: '16px',
+            fontSize: isMobile ? '14px' : '16px',
             fontWeight: '600',
             color: '#2D3748',
-            margin: '0 0 12px 0',
+            margin: '0 0 8px 0',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: '6px'
           }}>
             <span style={{
               width: '4px',
@@ -158,15 +188,15 @@ export default function AssociationCard({ association }) {
           </h4>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '12px'
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: isMobile ? '8px' : '12px'
           }}>
             {association.Cellules.map((cellule, index) => (
               <div
                 key={index}
                 style={{
                   backgroundColor: '#E9F9FF',
-                  padding: '12px 16px',
+                  padding: isMobile ? '10px 12px' : '12px 16px',
                   borderRadius: '8px',
                   border: '1px solid #82D5F5'
                 }}
@@ -174,36 +204,39 @@ export default function AssociationCard({ association }) {
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  marginBottom: '4px'
+                  gap: isMobile ? '6px' : '8px',
+                  marginBottom: '2px'
                 }}>
                   <div style={{
-                    width: '16px',
-                    height: '16px',
+                    width: isMobile ? '14px' : '16px',
+                    height: isMobile ? '14px' : '16px',
                     backgroundColor: '#1A76B5',
                     borderRadius: '4px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '10px',
+                    fontSize: isMobile ? '8px' : '10px',
                     color: 'white',
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    flexShrink: 0
                   }}>
                     {index + 1}
                   </div>
                   <span style={{
-                    fontSize: '14px',
+                    fontSize: isMobile ? '13px' : '14px',
                     fontWeight: '600',
-                    color: '#1A76B5'
+                    color: '#1A76B5',
+                    lineHeight: '1.3'
                   }}>
                     {cellule}
                   </span>
                 </div>
                 <p style={{
-                  fontSize: '12px',
+                  fontSize: isMobile ? '10px' : '12px',
                   color: '#4A5568',
                   margin: 0,
-                  paddingLeft: '24px'
+                  paddingLeft: isMobile ? '20px' : '24px',
+                  lineHeight: '1.3'
                 }}>
                   Groupe de travail spécialisé
                 </p>
@@ -216,9 +249,10 @@ export default function AssociationCard({ association }) {
       {/* Liens et contacts */}
       <div style={{
         display: 'flex',
-        gap: '16px',
-        paddingLeft: '76px',
-        flexWrap: 'wrap'
+        gap: isMobile ? '12px' : '16px',
+        paddingLeft: isMobile ? '0' : '76px',
+        flexWrap: 'wrap',
+        flexDirection: isMobile ? 'column' : 'row'
       }}>
         {/* Site Web Officiel */}
         {association.official_website && (
@@ -229,21 +263,27 @@ export default function AssociationCard({ association }) {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
+              justifyContent: 'center',
+              gap: '6px',
               backgroundColor: '#1A76B5',
               color: 'white',
-              padding: '10px 20px',
+              padding: isMobile ? '8px 16px' : '10px 20px',
               borderRadius: '8px',
-              fontSize: '14px',
+              fontSize: isMobile ? '13px' : '14px',
               fontWeight: '600',
               textDecoration: 'none',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              width: isMobile ? '100%' : 'auto'
             }}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#155a8a'
+              if (!isMobile) {
+                e.target.style.backgroundColor = '#155a8a'
+              }
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#1A76B5'
+              if (!isMobile) {
+                e.target.style.backgroundColor = '#1A76B5'
+              }
             }}
           >
             <span>🌐</span>
@@ -251,7 +291,7 @@ export default function AssociationCard({ association }) {
           </a>
         )}
 
-        {/* Instagram - CORRECTION ICI : "instagram" au lieu de "Instagram" */}
+        {/* Instagram */}
         {association.instagram && (
           <a
             href={association.instagram}
@@ -260,21 +300,27 @@ export default function AssociationCard({ association }) {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
+              justifyContent: 'center',
+              gap: '6px',
               backgroundColor: '#E1306C',
               color: 'white',
-              padding: '10px 20px',
+              padding: isMobile ? '8px 16px' : '10px 20px',
               borderRadius: '8px',
-              fontSize: '14px',
+              fontSize: isMobile ? '13px' : '14px',
               fontWeight: '600',
               textDecoration: 'none',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              width: isMobile ? '100%' : 'auto'
             }}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#C13584'
+              if (!isMobile) {
+                e.target.style.backgroundColor = '#C13584'
+              }
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#E1306C'
+              if (!isMobile) {
+                e.target.style.backgroundColor = '#E1306C'
+              }
             }}
           >
             <span>📷</span>
@@ -282,54 +328,62 @@ export default function AssociationCard({ association }) {
           </a>
         )}
 
-        {/* Bouton de contact général */}
-          {association.official_mail && (
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          backgroundColor: '#F7FAFC',
-          color: '#4A5568',
-          padding: '10px 20px',
-          borderRadius: '8px',
-          fontSize: '14px',
-          fontWeight: '400',
-          border: '1px solid #E2E8F0',
-          cursor: 'pointer',
-          transition: 'all 0.2s ease'
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.backgroundColor = '#E9F9FF'
-          e.target.style.borderColor = '#82D5F5'
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.backgroundColor = '#F7FAFC'
-          e.target.style.borderColor = '#E2E8F0'
-        }}
-        >
-          <span>📧</span>
-          {association.official_mail}
-        </div>
+        {/* Email officiel */}
+        {association.official_mail && (
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px',
+            backgroundColor: '#F7FAFC',
+            color: '#4A5568',
+            padding: isMobile ? '8px 16px' : '10px 20px',
+            borderRadius: '8px',
+            fontSize: isMobile ? '13px' : '14px',
+            fontWeight: '400',
+            border: '1px solid #E2E8F0',
+            transition: 'all 0.2s ease',
+            width: isMobile ? '100%' : 'auto',
+            wordBreak: 'break-all'
+          }}
+          onMouseEnter={(e) => {
+            if (!isMobile) {
+              e.target.style.backgroundColor = '#E9F9FF'
+              e.target.style.borderColor = '#82D5F5'
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isMobile) {
+              e.target.style.backgroundColor = '#F7FAFC'
+              e.target.style.borderColor = '#E2E8F0'
+            }
+          }}
+          >
+            <span>📧</span>
+            {association.official_mail}
+          </div>
         )}
       </div>
-      
 
       {/* Footer informatif */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: '20px',
-        paddingTop: '16px',
+        marginTop: isMobile ? '16px' : '20px',
+        paddingTop: isMobile ? '12px' : '16px',
         borderTop: '1px solid #E2E8F0',
-        paddingLeft: '76px'
+        paddingLeft: isMobile ? '0' : '76px',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? '8px' : '0'
       }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
-          fontSize: '12px',
-          color: '#718096'
+          gap: isMobile ? '8px' : '12px',
+          fontSize: isMobile ? '10px' : '12px',
+          color: '#718096',
+          flexWrap: 'wrap'
         }}>
           <span style={{
             display: 'flex',
@@ -337,8 +391,8 @@ export default function AssociationCard({ association }) {
             gap: '4px'
           }}>
             <span style={{
-              width: '8px',
-              height: '8px',
+              width: '6px',
+              height: '6px',
               backgroundColor: '#82D5F5',
               borderRadius: '50%'
             }}></span>
@@ -352,8 +406,8 @@ export default function AssociationCard({ association }) {
               gap: '4px'
             }}>
               <span style={{
-                width: '8px',
-                height: '8px',
+                width: '6px',
+                height: '6px',
                 backgroundColor: '#82D5F5',
                 borderRadius: '50%'
               }}></span>
@@ -363,7 +417,7 @@ export default function AssociationCard({ association }) {
         </div>
         
         <div style={{
-          fontSize: '12px',
+          fontSize: isMobile ? '10px' : '12px',
           color: '#718096',
           fontWeight: '500',
           fontStyle: 'italic'

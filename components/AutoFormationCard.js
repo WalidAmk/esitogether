@@ -1,21 +1,43 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 export default function AutoFormationCard({ formation }) {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Détection de la taille d'écran
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   return (
     <div style={{
       border: '1px solid #E2E8F0',
       borderRadius: '12px',
-      padding: '24px',
+      padding: isMobile ? '16px' : '24px',
       backgroundColor: 'white',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
       transition: 'all 0.3s ease',
-      marginBottom: '20px'
+      marginBottom: isMobile ? '16px' : '20px'
+    }}
+    onMouseEnter={(e) => {
+      if (!isMobile) {
+        e.target.style.transform = 'translateY(-2px)'
+      }
+    }}
+    onMouseLeave={(e) => {
+      if (!isMobile) {
+        e.target.style.transform = 'translateY(0)'
+      }
     }}
     >
       {/* En-tête du domaine */}
@@ -23,23 +45,29 @@ export default function AutoFormationCard({ formation }) {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginBottom: '20px',
+        marginBottom: isMobile ? '16px' : '20px',
         flexWrap: 'wrap',
-        gap: '16px'
+        gap: isMobile ? '12px' : '16px',
+        flexDirection: isMobile ? 'column' : 'row'
       }}>
-        <div style={{ flex: 1, minWidth: '250px' }}>
+        <div style={{ 
+          flex: 1, 
+          minWidth: isMobile ? 'auto' : '250px',
+          width: isMobile ? '100%' : 'auto'
+        }}>
           <h3 style={{
-            fontSize: '22px',
+            fontSize: isMobile ? '18px' : '22px',
             fontWeight: 'bold',
             color: '#1A76B5',
-            margin: '0 0 8px 0'
+            margin: '0 0 6px 0',
+            lineHeight: '1.3'
           }}>
             {formation.domaine}
           </h3>
           <p style={{
             color: '#4A5568',
-            fontSize: '15px',
-            margin: '0 0 12px 0',
+            fontSize: isMobile ? '14px' : '15px',
+            margin: '0 0 10px 0',
             lineHeight: '1.5'
           }}>
             {formation.description}
@@ -48,26 +76,24 @@ export default function AutoFormationCard({ formation }) {
           {/* Métadonnées */}
           <div style={{
             display: 'flex',
-            gap: '16px',
+            gap: isMobile ? '12px' : '16px',
             flexWrap: 'wrap'
           }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              fontSize: '13px',
+              gap: '4px',
+              fontSize: isMobile ? '12px' : '13px',
               color: '#718096'
             }}>
               <span style={{
-                width: '8px',
-                height: '8px',
+                width: '6px',
+                height: '6px',
                 backgroundColor: '#82D5F5',
                 borderRadius: '50%'
               }}></span>
               Niveau: <strong style={{ color: '#4A5568' }}>{formation.niveau}</strong>
             </div>
-            
-            
           </div>
         </div>
         
@@ -78,25 +104,31 @@ export default function AutoFormationCard({ formation }) {
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '8px',
+            justifyContent: 'center',
+            gap: '6px',
             backgroundColor: '#1A76B5',
             color: 'white',
-            padding: '12px 20px',
+            padding: isMobile ? '10px 16px' : '12px 20px',
             borderRadius: '8px',
-            fontSize: '14px',
+            fontSize: isMobile ? '13px' : '14px',
             fontWeight: '600',
             textDecoration: 'none',
             transition: 'all 0.2s ease',
             whiteSpace: 'nowrap',
-            height: 'fit-content'
+            height: 'fit-content',
+            width: isMobile ? '100%' : 'auto'
           }}
           onMouseEnter={(e) => {
-            e.target.style.backgroundColor = '#155a8a'
-            e.target.style.transform = 'translateY(-1px)'
+            if (!isMobile) {
+              e.target.style.backgroundColor = '#155a8a'
+              e.target.style.transform = 'translateY(-1px)'
+            }
           }}
           onMouseLeave={(e) => {
-            e.target.style.backgroundColor = '#1A76B5'
-            e.target.style.transform = 'translateY(0)'
+            if (!isMobile) {
+              e.target.style.backgroundColor = '#1A76B5'
+              e.target.style.transform = 'translateY(0)'
+            }
           }}
         >
           <span>📥</span>
@@ -106,28 +138,28 @@ export default function AutoFormationCard({ formation }) {
 
       {/* Technologies */}
       {formation.technologies && formation.technologies.length > 0 && (
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: isMobile ? '16px' : '20px' }}>
           <h4 style={{
-            fontSize: '16px',
+            fontSize: isMobile ? '14px' : '16px',
             fontWeight: '600',
             color: '#2D3748',
-            margin: '0 0 12px 0'
+            margin: '0 0 8px 0'
           }}>
             Technologies couvertes :
           </h4>
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px'
           }}>
             {formation.technologies.map((tech, index) => (
               <span
                 key={index}
                 style={{
                   backgroundColor: '#E9F9FF',
-                  padding: '6px 12px',
+                  padding: isMobile ? '4px 8px' : '6px 12px',
                   borderRadius: '16px',
-                  fontSize: '13px',
+                  fontSize: isMobile ? '11px' : '13px',
                   color: '#1A76B5',
                   fontWeight: '500',
                   border: '1px solid #82D5F5'
@@ -142,12 +174,12 @@ export default function AutoFormationCard({ formation }) {
 
       {/* Image de la roadmap */}
       <div style={{
-        marginTop: '20px',
+        marginTop: isMobile ? '16px' : '20px',
         borderRadius: '8px',
         overflow: 'hidden',
         border: '1px solid #E2E8F0',
         backgroundColor: '#F7FAFC',
-        minHeight: '200px',
+        minHeight: isMobile ? '150px' : '200px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -155,23 +187,37 @@ export default function AutoFormationCard({ formation }) {
       }}>
         {!imageLoaded && !imageError && (
           <div style={{
-            padding: '40px',
+            padding: isMobile ? '20px' : '40px',
             textAlign: 'center',
             color: '#718096'
           }}>
-            <div style={{ fontSize: '24px', marginBottom: '8px' }}>🔄</div>
-            Chargement de la roadmap...
+            <div style={{ 
+              fontSize: isMobile ? '18px' : '24px', 
+              marginBottom: isMobile ? '4px' : '8px' 
+            }}>
+              🔄
+            </div>
+            <div style={{ fontSize: isMobile ? '12px' : '14px' }}>
+              Chargement de la roadmap...
+            </div>
           </div>
         )}
         
         {imageError ? (
           <div style={{
-            padding: '40px',
+            padding: isMobile ? '20px' : '40px',
             textAlign: 'center',
             color: '#718096'
           }}>
-            <div style={{ fontSize: '24px', marginBottom: '8px' }}>❌</div>
-            Roadmap non disponible
+            <div style={{ 
+              fontSize: isMobile ? '18px' : '24px', 
+              marginBottom: isMobile ? '4px' : '8px' 
+            }}>
+              ❌
+            </div>
+            <div style={{ fontSize: isMobile ? '12px' : '14px' }}>
+              Roadmap non disponible
+            </div>
           </div>
         ) : (
           <Image
@@ -182,7 +228,7 @@ export default function AutoFormationCard({ formation }) {
             style={{
               width: '100%',
               height: 'auto',
-              maxHeight: '400px',
+              maxHeight: isMobile ? '300px' : '400px',
               objectFit: 'contain',
               display: imageLoaded ? 'block' : 'none'
             }}
@@ -197,17 +243,18 @@ export default function AutoFormationCard({ formation }) {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: '20px',
-        paddingTop: '16px',
+        marginTop: isMobile ? '16px' : '20px',
+        paddingTop: isMobile ? '12px' : '16px',
         borderTop: '1px solid #E2E8F0',
         flexWrap: 'wrap',
-        gap: '12px'
+        gap: isMobile ? '8px' : '12px',
+        flexDirection: isMobile ? 'column' : 'row'
       }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
-          fontSize: '13px',
+          gap: isMobile ? '8px' : '12px',
+          fontSize: isMobile ? '11px' : '13px',
           color: '#718096'
         }}>
           <span style={{
@@ -216,8 +263,8 @@ export default function AutoFormationCard({ formation }) {
             gap: '4px'
           }}>
             <span style={{
-              width: '8px',
-              height: '8px',
+              width: '6px',
+              height: '6px',
               backgroundColor: '#82D5F5',
               borderRadius: '50%'
             }}></span>
@@ -227,10 +274,10 @@ export default function AutoFormationCard({ formation }) {
         
         <div style={{
           display: 'flex',
-          gap: '12px',
+          gap: isMobile ? '8px' : '12px',
           flexWrap: 'wrap'
         }}>
-         
+          {/* Vous pouvez ajouter d'autres boutons d'action ici si nécessaire */}
         </div>
       </div>
     </div>

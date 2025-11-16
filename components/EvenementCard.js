@@ -1,6 +1,21 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 export default function EvenementCard({ evenement }) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Détection de la taille d'écran
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   // Fonction pour formater la date
   const formatDate = (dateString) => {
     return dateString
@@ -10,26 +25,41 @@ export default function EvenementCard({ evenement }) {
     <div style={{
       border: '1px solid #E2E8F0',
       borderRadius: '12px',
-      padding: '24px',
+      padding: isMobile ? '16px' : '24px',
       backgroundColor: 'white',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
       transition: 'all 0.3s ease',
-      marginBottom: '20px',
+      marginBottom: isMobile ? '16px' : '20px',
       position: 'relative'
+    }}
+    onMouseEnter={(e) => {
+      if (!isMobile) {
+        e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.12)'
+        e.target.style.transform = 'translateY(-2px)'
+      }
+    }}
+    onMouseLeave={(e) => {
+      if (!isMobile) {
+        e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)'
+        e.target.style.transform = 'translateY(0)'
+      }
     }}
     >
       {/* Badge de date */}
       <div style={{
-        position: 'absolute',
-        top: '20px',
-        right: '20px',
+        position: isMobile ? 'static' : 'absolute',
+        top: isMobile ? 'auto' : '20px',
+        right: isMobile ? 'auto' : '20px',
         backgroundColor: '#E9F9FF',
-        padding: '8px 16px',
+        padding: isMobile ? '6px 12px' : '8px 16px',
         borderRadius: '20px',
-        fontSize: '14px',
+        fontSize: isMobile ? '12px' : '14px',
         fontWeight: '600',
         color: '#1A76B5',
-        border: '1px solid #82D5F5'
+        border: '1px solid #82D5F5',
+        marginBottom: isMobile ? '12px' : '0',
+        width: isMobile ? 'fit-content' : 'auto',
+        alignSelf: isMobile ? 'flex-start' : 'auto'
       }}>
         {formatDate(evenement.date)}
       </div>
@@ -38,40 +68,45 @@ export default function EvenementCard({ evenement }) {
       <div style={{
         display: 'flex',
         alignItems: 'flex-start',
-        gap: '16px',
-        marginBottom: '16px',
-        paddingRight: '120px'
+        gap: isMobile ? '12px' : '16px',
+        marginBottom: isMobile ? '12px' : '16px',
+        paddingRight: isMobile ? '0' : '120px',
+        flexDirection: isMobile ? 'column' : 'row'
       }}>
         {/* Icône événement */}
         <div style={{
-          width: '60px',
-          height: '60px',
+          width: isMobile ? '48px' : '60px',
+          height: isMobile ? '48px' : '60px',
           backgroundColor: '#1A76B5',
-          borderRadius: '12px',
+          borderRadius: isMobile ? '8px' : '12px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '24px',
+          fontSize: isMobile ? '18px' : '24px',
           color: 'white',
           flexShrink: 0
         }}>
           🎊
         </div>
         
-        <div style={{ flex: 1 }}>
+        <div style={{ 
+          flex: 1,
+          width: isMobile ? '100%' : 'auto'
+        }}>
           <h3 style={{
-            fontSize: '22px',
+            fontSize: isMobile ? '18px' : '22px',
             fontWeight: 'bold',
             color: '#1A76B5',
-            margin: '0 0 8px 0'
+            margin: '0 0 6px 0',
+            lineHeight: '1.3'
           }}>
             {evenement.title}
           </h3>
           <p style={{
             color: '#4A5568',
-            fontSize: '15px',
+            fontSize: isMobile ? '14px' : '15px',
             margin: 0,
-            lineHeight: '1.5'
+            lineHeight: '1.4'
           }}>
             {evenement.description}
           </p>
@@ -81,43 +116,47 @@ export default function EvenementCard({ evenement }) {
       {/* Informations lieu et date */}
       <div style={{
         display: 'flex',
-        gap: '24px',
-        marginBottom: '20px',
-        paddingLeft: '76px',
-        flexWrap: 'wrap'
+        gap: isMobile ? '16px' : '24px',
+        marginBottom: isMobile ? '16px' : '20px',
+        paddingLeft: isMobile ? '0' : '76px',
+        flexWrap: 'wrap',
+        flexDirection: isMobile ? 'column' : 'row'
       }}>
         {/* Lieu */}
         {evenement.lieu && (
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px',
+            flex: isMobile ? '1' : '0 1 auto'
           }}>
             <div style={{
-              width: '32px',
-              height: '32px',
+              width: isMobile ? '28px' : '32px',
+              height: isMobile ? '28px' : '32px',
               backgroundColor: '#E9F9FF',
               borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '16px',
-              color: '#1A76B5'
+              fontSize: isMobile ? '14px' : '16px',
+              color: '#1A76B5',
+              flexShrink: 0
             }}>
               📍
             </div>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{
-                fontSize: '12px',
+                fontSize: isMobile ? '11px' : '12px',
                 color: '#718096',
                 fontWeight: '500'
               }}>
                 Lieu
               </div>
               <div style={{
-                fontSize: '14px',
+                fontSize: isMobile ? '13px' : '14px',
                 color: '#2D3748',
-                fontWeight: '600'
+                fontWeight: '600',
+                wordBreak: 'break-word'
               }}>
                 {evenement.lieu}
               </div>
@@ -130,31 +169,33 @@ export default function EvenementCard({ evenement }) {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px',
+            flex: isMobile ? '1' : '0 1 auto'
           }}>
             <div style={{
-              width: '32px',
-              height: '32px',
+              width: isMobile ? '28px' : '32px',
+              height: isMobile ? '28px' : '32px',
               backgroundColor: '#E9F9FF',
               borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '16px',
-              color: '#1A76B5'
+              fontSize: isMobile ? '14px' : '16px',
+              color: '#1A76B5',
+              flexShrink: 0
             }}>
               📅
             </div>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{
-                fontSize: '12px',
+                fontSize: isMobile ? '11px' : '12px',
                 color: '#718096',
                 fontWeight: '500'
               }}>
                 Date
               </div>
               <div style={{
-                fontSize: '14px',
+                fontSize: isMobile ? '13px' : '14px',
                 color: '#2D3748',
                 fontWeight: '600'
               }}>
@@ -168,17 +209,17 @@ export default function EvenementCard({ evenement }) {
       {/* Activités/Détails */}
       {evenement.details && evenement.details.length > 0 && (
         <div style={{ 
-          marginBottom: '24px',
-          paddingLeft: '76px'
+          marginBottom: isMobile ? '20px' : '24px',
+          paddingLeft: isMobile ? '0' : '76px'
         }}>
           <h4 style={{
-            fontSize: '16px',
+            fontSize: isMobile ? '14px' : '16px',
             fontWeight: '600',
             color: '#2D3748',
-            margin: '0 0 12px 0',
+            margin: '0 0 8px 0',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px'
           }}>
             <span style={{
               width: '4px',
@@ -190,40 +231,42 @@ export default function EvenementCard({ evenement }) {
           </h4>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '12px'
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: isMobile ? '8px' : '12px'
           }}>
             {evenement.details.map((activite, index) => (
               <div
                 key={index}
                 style={{
                   backgroundColor: '#F7FAFC',
-                  padding: '12px 16px',
+                  padding: isMobile ? '10px 12px' : '12px 16px',
                   borderRadius: '8px',
                   border: '1px solid #E2E8F0',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px'
+                  gap: isMobile ? '6px' : '8px'
                 }}
               >
                 <div style={{
-                  width: '20px',
-                  height: '20px',
+                  width: isMobile ? '18px' : '20px',
+                  height: isMobile ? '18px' : '20px',
                   backgroundColor: '#82D5F5',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '10px',
+                  fontSize: isMobile ? '9px' : '10px',
                   color: 'white',
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
+                  flexShrink: 0
                 }}>
                   {index + 1}
                 </div>
                 <span style={{
-                  fontSize: '14px',
+                  fontSize: isMobile ? '13px' : '14px',
                   fontWeight: '500',
-                  color: '#4A5568'
+                  color: '#4A5568',
+                  lineHeight: '1.3'
                 }}>
                   {activite}
                 </span>
@@ -238,17 +281,19 @@ export default function EvenementCard({ evenement }) {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: '16px',
+        paddingTop: isMobile ? '12px' : '16px',
         borderTop: '1px solid #E2E8F0',
-        paddingLeft: '76px',
+        paddingLeft: isMobile ? '0' : '76px',
         flexWrap: 'wrap',
-        gap: '12px'
+        gap: isMobile ? '8px' : '12px',
+        flexDirection: isMobile ? 'column' : 'row'
       }}>
         {/* Bouton principal */}
         <div style={{
           display: 'flex',
-          gap: '12px',
-          flexWrap: 'wrap'
+          gap: isMobile ? '8px' : '12px',
+          flexWrap: 'wrap',
+          width: isMobile ? '100%' : 'auto'
         }}>
           {/* Lien vers plus d'informations */}
           {evenement.lien && (
@@ -259,70 +304,49 @@ export default function EvenementCard({ evenement }) {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '8px',
+                justifyContent: 'center',
+                gap: '6px',
                 backgroundColor: '#1A76B5',
                 color: 'white',
-                padding: '10px 20px',
+                padding: isMobile ? '8px 16px' : '10px 20px',
                 borderRadius: '8px',
-                fontSize: '14px',
+                fontSize: isMobile ? '13px' : '14px',
                 fontWeight: '600',
                 textDecoration: 'none',
-                transition: 'background-color 0.2s ease'
+                transition: 'background-color 0.2s ease',
+                width: isMobile ? '100%' : 'auto',
+                flex: isMobile ? '1' : '0 1 auto'
               }}
               onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#155a8a'
+                if (!isMobile) {
+                  e.target.style.backgroundColor = '#155a8a'
+                }
               }}
               onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#1A76B5'
+                if (!isMobile) {
+                  e.target.style.backgroundColor = '#1A76B5'
+                }
               }}
             >
               <span>ℹ️</span>
               Plus d'informations
             </a>
           )}
-
-          {/* Bouton participer (simulé) */}
-          {/* <button
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              backgroundColor: '#E9F9FF',
-              color: '#1A76B5',
-              padding: '10px 20px',
-              borderRadius: '8px',
-              fontSize: '14px',
-              fontWeight: '600',
-              border: '1px solid #82D5F5',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#82D5F5'
-              e.target.style.color = 'white'
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#E9F9FF'
-              e.target.style.color = '#1A76B5'
-            }}
-          >
-            <span>✅</span>
-            Participer
-          </button> */}
         </div>
 
         {/* Statut de l'événement */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px',
-          fontSize: '12px',
+          gap: '6px',
+          fontSize: isMobile ? '11px' : '12px',
           color: '#718096',
-          fontWeight: '500'
+          fontWeight: '500',
+          alignSelf: isMobile ? 'flex-start' : 'center'
         }}>
           <span style={{
-            width: '8px',
-            height: '8px',
+            width: '6px',
+            height: '6px',
             backgroundColor: '#82D5F5',
             borderRadius: '50%',
             animation: 'pulse 2s infinite'

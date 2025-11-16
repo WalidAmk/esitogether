@@ -1,31 +1,60 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+
 export default function LogementCard({ logement }) {
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Détection de la taille d'écran
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <div style={{
       border: '1px solid #E2E8F0',
       borderRadius: '12px',
-      padding: '24px',
+      padding: isMobile ? '16px' : '24px',
       backgroundColor: 'white',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
       transition: 'all 0.3s ease',
-      marginBottom: '20px'
+      marginBottom: isMobile ? '16px' : '20px'
     }}
-    
+    onMouseEnter={(e) => {
+      if (!isMobile) {
+        e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.12)'
+        e.target.style.transform = 'translateY(-2px)'
+      }
+    }}
+    onMouseLeave={(e) => {
+      if (!isMobile) {
+        e.target.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.08)'
+        e.target.style.transform = 'translateY(0)'
+      }
+    }}
     >
       {/* En-tête */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginBottom: '16px'
+        marginBottom: isMobile ? '12px' : '16px',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? '8px' : '0'
       }}>
         <h3 style={{
-          fontSize: '20px',
+          fontSize: isMobile ? '18px' : '20px',
           fontWeight: 'bold',
           color: '#1A76B5',
           margin: 0,
-          flex: 1
+          flex: 1,
+          lineHeight: '1.3'
         }}>
           {logement.title}
         </h3>
@@ -33,12 +62,13 @@ export default function LogementCard({ logement }) {
         {logement.prix && (
           <div style={{
             backgroundColor: '#E9F9FF',
-            padding: '8px 16px',
+            padding: isMobile ? '6px 12px' : '8px 16px',
             borderRadius: '20px',
-            fontSize: '14px',
+            fontSize: isMobile ? '12px' : '14px',
             fontWeight: '600',
             color: '#1A76B5',
-            whiteSpace: 'nowrap'
+            whiteSpace: 'nowrap',
+            alignSelf: isMobile ? 'flex-start' : 'auto'
           }}>
             {logement.prix}
           </div>
@@ -49,23 +79,23 @@ export default function LogementCard({ logement }) {
       <p style={{
         color: '#4A5568',
         lineHeight: '1.6',
-        margin: '0 0 20px 0',
-        fontSize: '15px'
+        margin: '0 0 16px 0',
+        fontSize: isMobile ? '14px' : '15px'
       }}>
         {logement.description}
       </p>
 
       {/* Détails */}
       {logement.details && logement.details.length > 0 && (
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: isMobile ? '16px' : '20px' }}>
           <h4 style={{
-            fontSize: '16px',
+            fontSize: isMobile ? '14px' : '16px',
             fontWeight: '600',
             color: '#2D3748',
-            margin: '0 0 12px 0',
+            margin: '0 0 8px 0',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px'
           }}>
             <span style={{
               width: '4px',
@@ -78,16 +108,16 @@ export default function LogementCard({ logement }) {
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px'
           }}>
             {logement.details.map((detail, index) => (
               <span
                 key={index}
                 style={{
                   backgroundColor: '#F7FAFC',
-                  padding: '6px 12px',
+                  padding: isMobile ? '4px 8px' : '6px 12px',
                   borderRadius: '16px',
-                  fontSize: '13px',
+                  fontSize: isMobile ? '11px' : '13px',
                   color: '#4A5568',
                   border: '1px solid #E2E8F0'
                 }}
@@ -102,9 +132,9 @@ export default function LogementCard({ logement }) {
       {/* Informations de contact et liens */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '16px',
-        paddingTop: '16px',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
+        gap: isMobile ? '12px' : '16px',
+        paddingTop: isMobile ? '12px' : '16px',
         borderTop: '1px solid #E2E8F0'
       }}>
         {/* Contact */}
@@ -112,33 +142,35 @@ export default function LogementCard({ logement }) {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px'
           }}>
             <div style={{
-              width: '32px',
-              height: '32px',
+              width: isMobile ? '28px' : '32px',
+              height: isMobile ? '28px' : '32px',
               backgroundColor: '#E9F9FF',
               borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '14px',
-              color: '#1A76B5'
+              fontSize: isMobile ? '12px' : '14px',
+              color: '#1A76B5',
+              flexShrink: 0
             }}>
               📞
             </div>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{
-                fontSize: '12px',
+                fontSize: isMobile ? '11px' : '12px',
                 color: '#718096',
                 fontWeight: '500'
               }}>
                 Contact
               </div>
               <div style={{
-                fontSize: '14px',
+                fontSize: isMobile ? '13px' : '14px',
                 color: '#2D3748',
-                fontWeight: '500'
+                fontWeight: '500',
+                wordBreak: 'break-word'
               }}>
                 {logement.contact}
               </div>
@@ -151,24 +183,25 @@ export default function LogementCard({ logement }) {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px'
           }}>
             <div style={{
-              width: '32px',
-              height: '32px',
+              width: isMobile ? '28px' : '32px',
+              height: isMobile ? '28px' : '32px',
               backgroundColor: '#E9F9FF',
               borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '14px',
-              color: '#1A76B5'
+              fontSize: isMobile ? '12px' : '14px',
+              color: '#1A76B5',
+              flexShrink: 0
             }}>
               🌐
             </div>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{
-                fontSize: '12px',
+                fontSize: isMobile ? '11px' : '12px',
                 color: '#718096',
                 fontWeight: '500'
               }}>
@@ -179,16 +212,21 @@ export default function LogementCard({ logement }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  fontSize: '14px',
+                  fontSize: isMobile ? '13px' : '14px',
                   color: '#1A76B5',
                   fontWeight: '500',
-                  textDecoration: 'none'
+                  textDecoration: 'none',
+                  wordBreak: 'break-word'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.textDecoration = 'underline'
+                  if (!isMobile) {
+                    e.target.style.textDecoration = 'underline'
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.textDecoration = 'none'
+                  if (!isMobile) {
+                    e.target.style.textDecoration = 'none'
+                  }
                 }}
               >
                 Visiter le site
@@ -202,24 +240,25 @@ export default function LogementCard({ logement }) {
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: isMobile ? '6px' : '8px'
           }}>
             <div style={{
-              width: '32px',
-              height: '32px',
+              width: isMobile ? '28px' : '32px',
+              height: isMobile ? '28px' : '32px',
               backgroundColor: '#E9F9FF',
               borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '14px',
-              color: '#1A76B5'
+              fontSize: isMobile ? '12px' : '14px',
+              color: '#1A76B5',
+              flexShrink: 0
             }}>
               📍
             </div>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{
-                fontSize: '12px',
+                fontSize: isMobile ? '11px' : '12px',
                 color: '#718096',
                 fontWeight: '500'
               }}>
@@ -230,16 +269,21 @@ export default function LogementCard({ logement }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  fontSize: '14px',
+                  fontSize: isMobile ? '13px' : '14px',
                   color: '#1A76B5',
                   fontWeight: '500',
-                  textDecoration: 'none'
+                  textDecoration: 'none',
+                  wordBreak: 'break-word'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.textDecoration = 'underline'
+                  if (!isMobile) {
+                    e.target.style.textDecoration = 'underline'
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.textDecoration = 'none'
+                  if (!isMobile) {
+                    e.target.style.textDecoration = 'none'
+                  }
                 }}
               >
                 Voir sur Google Maps

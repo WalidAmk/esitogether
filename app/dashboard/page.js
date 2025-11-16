@@ -1,17 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-
 import { useRouter } from 'next/navigation'
 import contentData from '../../data/content.json'
+import Image from 'next/image'
+import logo from '../../public/images/logo.png'
 import LogementCard from '../../components/LogementCard'
 import TransportCard from '../../components/TransportCard'
 import ResourcesCard from '../../components/ResourcesCard'
 import AssociationCard from '../../components/AssociationCard'
 import EvenementCard from '../../components/EvenementCard'
 import AutoFormationCard from '../../components/AutoFormationCard'
-import Image from 'next/image'
-import logo from '../../public/images/logo.png'
+import FAQCard from '../../components/FAQCard'
+
 
 export default function Dashboard() {
   
@@ -257,128 +258,15 @@ export default function Dashboard() {
                       return <AutoFormationCard key={index} formation={item} />
                     }
 
+                    
+
+                    else if (activeSection === 'faq' && activeSubsection === 'questions-frequentes') {
+                      return <FAQCard key={index} faq={item} />
+                    }
+
                   // Sections par défaut (pour evenements, autoformation, etc.)
                   else {
-                    // return (
-                    //   <div
-                    //     key={index}
-                    //     style={{
-                    //       border: '1px solid #E2E8F0',
-                    //       borderRadius: '12px',
-                    //       padding: '24px',
-                    //       backgroundColor: '#F7FAFC',
-                    //       transition: 'all 0.3s ease'
-                    //     }}
-                    //   >
-                    //     <h3 style={{
-                    //       fontSize: '20px',
-                    //       fontWeight: 'bold',
-                    //       color: '#1A76B5',
-                    //       margin: '0 0 12px 0'
-                    //     }}>
-                    //       {item.title}
-                    //     </h3>
-                        
-                    //     {item.description && (
-                    //       <p style={{
-                    //         color: '#4A5568',
-                    //         margin: '0 0 16px 0',
-                    //         lineHeight: '1.6',
-                    //         fontSize: '15px'
-                    //       }}>
-                    //         {item.description}
-                    //       </p>
-                    //     )}
-
-                    //     {/* Détails génériques */}
-                    //     {item.details && (
-                    //       <div style={{ marginBottom: '16px' }}>
-                    //         <h4 style={{
-                    //           fontSize: '16px',
-                    //           fontWeight: '600',
-                    //           color: '#2D3748',
-                    //           margin: '0 0 8px 0'
-                    //         }}>
-                    //           Informations :
-                    //         </h4>
-                    //         <ul style={{
-                    //           color: '#4A5568',
-                    //           margin: 0,
-                    //           paddingLeft: '20px'
-                    //         }}>
-                    //           {item.details.map((detail, i) => (
-                    //             <li key={i} style={{ marginBottom: '4px' }}>{detail}</li>
-                    //           ))}
-                    //         </ul>
-                    //       </div>
-                    //     )}
-
-                    //     {/* Horaires */}
-                    //     {item.horaires && (
-                    //       <div style={{ marginBottom: '16px' }}>
-                    //         <h4 style={{
-                    //           fontSize: '16px',
-                    //           fontWeight: '600',
-                    //           color: '#2D3748',
-                    //           margin: '0 0 8px 0'
-                    //         }}>
-                    //           Horaires :
-                    //         </h4>
-                    //         <ul style={{
-                    //           color: '#4A5568',
-                    //           margin: 0,
-                    //           paddingLeft: '20px'
-                    //         }}>
-                    //           {item.horaires.map((horaire, i) => (
-                    //             <li key={i} style={{ marginBottom: '4px' }}>{horaire}</li>
-                    //           ))}
-                    //         </ul>
-                    //       </div>
-                    //     )}
-
-                    //     {/* Informations supplémentaires */}
-                    //     {(item.prix || item.contact || item.lien) && (
-                    //       <div style={{
-                    //         display: 'flex',
-                    //         gap: '20px',
-                    //         fontSize: '14px',
-                    //         flexWrap: 'wrap'
-                    //       }}>
-                    //         {item.prix && (
-                    //           <div>
-                    //             <strong style={{ color: '#2D3748' }}>Prix : </strong>
-                    //             <span style={{ color: '#1A76B5', fontWeight: '600' }}>{item.prix}</span>
-                    //           </div>
-                    //         )}
-                    //         {item.contact && (
-                    //           <div>
-                    //             <strong style={{ color: '#2D3748' }}>Contact : </strong>
-                    //             <span style={{ color: '#1A76B5' }}>{item.contact}</span>
-                    //           </div>
-                    //         )}
-                    //         {item.lien && (
-                    //           <div>
-                    //             <strong style={{ color: '#2D3748' }}>Lien : </strong>
-                    //             <a 
-                    //               href={item.lien} 
-                    //               target="_blank" 
-                    //               rel="noopener noreferrer"
-                    //               style={{ color: '#1A76B5', textDecoration: 'none' }}
-                    //               onMouseEnter={(e) => {
-                    //                 e.target.style.textDecoration = 'underline'
-                    //               }}
-                    //               onMouseLeave={(e) => {
-                    //                 e.target.style.textDecoration = 'none'
-                    //               }}
-                    //             >
-                    //               Accéder
-                    //             </a>
-                    //           </div>
-                    //         )}
-                    //       </div>
-                    //     )}
-                    //   </div>
-                    // )
+                    // Composant par défaut pour les autres sections
                   }
                 })}
               </div>
@@ -394,8 +282,8 @@ export default function Dashboard() {
                   opacity: 0.5
                 }}>
                   {activeSection === 'ressources-academiques' && activeSubsection === 'autoformation' ? '📚' :
-                   activeSection === 'vie-etudiante' && activeSubsection === 'evenements' ? '🎭' :
-                   '📝'}
+                    activeSection === 'vie-etudiante' && activeSubsection === 'evenements' ? '🎭' :
+                    '📝'}
                 </div>
                 <h3 style={{
                   fontSize: '20px',

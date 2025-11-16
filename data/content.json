@@ -81,7 +81,7 @@
       "icon": "📚",
       "subsections": {
         "resources": {
-          "title": "Ressources de Cours",
+          "title": "Ressources du Cours",
           "content": [
             {
               "filiere": "ICSD",
@@ -311,6 +311,62 @@
               "date": "2025-10-08",
               "lieu": "ESI",
               "lien": "http://www.esi.ac.ma/esi-pmimena-leadership-institute-meeting-2025/"
+            }
+          ]
+        }
+      }
+    },
+    "faq": {
+      "title": "FAQ & Aide",
+      "icon": "❓",
+      "subsections": {
+        "questions-frequentes": {
+          "title": "Questions Fréquentes",
+          "content": [
+            {
+              "question": "Qu'est-ce que la plateforme ESI Together ?",
+              "reponse": "ESI Together est une plateforme conçue pour accompagner les nouveaux étudiants de l'École des Sciences de l'Information en centralisant toutes les informations essentielles : logement, transport, ressources académiques et vie étudiante.",
+              "categorie": "Général"
+            },
+            {
+              "question": "À qui s'adresse la plateforme ?",
+              "reponse": "Elle s'adresse principalement aux nouveaux étudiants intégrant l'ESI, mais reste utile pour tous les étudiants souhaitant accéder rapidement à des informations fiables et organisées.",
+              "categorie": "Général"
+            },
+            {
+              "question": "Quels types de logements sont proposés ?",
+              "reponse": "La plateforme référence plusieurs résidences étudiantes à Rabat, notamment Bayt Al Maârifa (BAM) et la Cité Universitaire Fondation Hassan II, avec leurs conditions d'accès et coordonnées.",
+              "categorie": "Logement"
+            },
+            {
+              "question": "Est-ce que la plateforme permet de réserver un logement ?",
+              "reponse": "Non. ESI Together ne réalise pas de réservations. Elle fournit uniquement les informations et contacts pour guider les étudiants dans leur démarche.",
+              "categorie": "Logement"
+            },
+            {
+              "question": "Quelles lignes de transport desservent l'ESI ?",
+              "reponse": "Les principaux moyens de transport sont : Bus ALSA (lignes L06 et L30), Tramway L1. Des indications sur les trajets, les arrêts proches et la durée moyenne du trajet sont également disponibles.",
+              "categorie": "Transport"
+            },
+            {
+              "question": "La plateforme fournit-elle des supports de cours ?",
+              "reponse": "Oui, une section 'Ressources académiques' regroupe cours, résumés, contrôles, examens et documents utiles mis à disposition par les étudiants ou enseignants.",
+              "categorie": "Ressources"
+            },
+            {
+              "question": "Que trouve-t-on dans la section Autoformation ?",
+              "reponse": "La section Autoformation (en cours de développement) proposera des supports complémentaires : tutoriels, vidéos éducatives, plateformes d'apprentissage et guides thématiques.",
+              "categorie": "Ressources"
+            },
+            {
+              "question": "La plateforme présente-t-elle les clubs de l'école ?",
+              "reponse": "Oui, la section 'Vie étudiante' contient les informations sur les clubs de l'ESI, notamment CODE ESI et JLM, ainsi que leurs activités et modalités d'adhésion.",
+              "categorie": "Vie Étudiante"
+            },
+            {
+              "question": "Peut-on contribuer à enrichir la plateforme ?",
+              "reponse": "Oui. Les étudiants peuvent proposer des ressources académiques, partager des informations utiles ou suggérer des améliorations via un formulaire de contact (ou un futur espace communautaire).",
+              "categorie": "Contribution"
             }
           ]
         }
